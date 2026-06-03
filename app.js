@@ -13,6 +13,7 @@
   const cleanFlash = document.getElementById('cleanFlash');
   const bigStars = document.getElementById('bigStars');
   const bubbleParty = document.getElementById('bubbleParty');
+  const shineBeams = document.getElementById('shineBeams');
   const celebration = document.getElementById('celebration');
 
   STAGES.forEach((src) => { const img = new Image(); img.src = src; });
@@ -42,6 +43,7 @@
     cleanFlash.classList.remove('show');
     bigStars.classList.remove('on');
     bubbleParty.classList.remove('on');
+    shineBeams.classList.remove('on');
     celebration.classList.remove('show');
   };
 
@@ -60,6 +62,7 @@
     app.classList.add('finished');
     bigStars.classList.add('on');
     bubbleParty.classList.add('on');
+    shineBeams.classList.add('on');
     replay(celebration, 'show');
     // 音源を切らない。画面だけ終了演出に入る。
   };
@@ -70,7 +73,7 @@
     app.classList.add('running');
 
     CHANGE_TIMES.forEach((sec, i) => addTimer(() => setStage(i + 1), sec * 1000));
-    addTimer(() => { bigStars.classList.add('on'); bubbleParty.classList.add('on'); }, 60 * 1000);
+    addTimer(() => { bigStars.classList.add('on'); bubbleParty.classList.add('on'); shineBeams.classList.add('on'); }, 60 * 1000);
     SPARK_TIMES.forEach((sec) => addTimer(() => replay(cleanFlash, 'show'), sec * 1000));
     addTimer(finish, FINISH_SECONDS * 1000);
 
@@ -90,6 +93,7 @@
       app.classList.add('finished');
       bigStars.classList.add('on');
       bubbleParty.classList.add('on');
+      shineBeams.classList.add('on');
       if (!finished) replay(celebration, 'show');
       finished = true;
     }
