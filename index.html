@@ -11,25 +11,23 @@
 </head>
 <body>
   <main id="app" class="app" aria-label="はみがきアプリ">
-    <img class="main-art" src="main.jpg" alt="" draggable="false" />
+    <img id="stageImage" class="stage-art" src="stage0.jpg" alt="" draggable="false" />
+    <button id="startButton" class="apple-hit" aria-label="スタート"></button>
 
-    <button id="startButton" class="apple-hit" aria-label="スタート / もう一回"></button>
-
-    <div class="brush-glow" aria-hidden="true"></div>
-    <div class="bubble-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-
-    <div id="cover1" class="germ-cover left" aria-hidden="true"></div>
-    <div id="cover2" class="germ-cover center" aria-hidden="true"></div>
-    <div id="cover3" class="germ-cover right" aria-hidden="true"></div>
-
-    <div id="cleanPop1" class="clean-pop left" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-    <div id="cleanPop2" class="clean-pop center" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    <div id="cleanPop3" class="clean-pop right" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-
-    <div id="shineLoop" class="shine-loop" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div id="cracker" class="cracker" aria-hidden="true"><span></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-
-    <div id="portraitGuide" class="portrait-guide" aria-hidden="true"><div class="phone">↻</div></div>
+    <div id="cleanFlash" class="clean-flash" aria-hidden="true"></div>
+    <div id="bigStars" class="big-stars" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div id="bubbleParty" class="bubble-party" aria-hidden="true">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div id="appleGlow" class="apple-glow" aria-hidden="true"></div>
+    <div id="celebration" class="celebration" aria-hidden="true">
+      <div class="burst"></div>
+      <div class="popper"><span></span></div>
+      <b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b>
+    </div>
+    <div id="portraitGuide" class="portrait-guide" aria-hidden="true"><div class="phone-mark"></div></div>
     <audio id="song" src="brush_song.m4a" preload="auto" playsinline></audio>
   </main>
   <script src="app.js"></script>
