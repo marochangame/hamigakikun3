@@ -1,50 +1,61 @@
 (() => {
   'use strict';
 
-  const TOTAL_SECONDS = 93;
-  const CLEAN_TIMES = [20, 50, 70];
-  const ACTION_TIMES = [8, 16, 28, 38, 58, 78, 88];
+  const CLEAN_TIMES = [23, 45, 60];
+  const SAFE_FINISH_SECONDS = 93; // 音源を途中で止めないための保険。基本は audio ended で終了。
+  const ACTION_TIMES = [10, 18, 30, 38, 52, 68, 76, 84];
 
   const app = document.getElementById('app');
   const button = document.getElementById('startButton');
   const audio = document.getElementById('song');
-  const patches = [document.getElementById('clean1'), document.getElementById('clean2'), document.getElementById('clean3')];
-  const bursts = [document.getElementById('burst1'), document.getElementById('burst2'), document.getElementById('burst3')];
-  const action = document.getElementById('actionFx');
+  const covers = [document.getElementById('cover1'), document.getElementById('cover2'), document.getElementById('cover3')];
+  const pops = [document.getElementById('cleanPop1'), document.getElementById('cleanPop2'), document.getElementById('cleanPop3')];
+  const shineLoop = document.getElementById('shineLoop');
+  const cracker = document.getElementById('cracker');
 
   let timers = [];
   let running = false;
 
-  const clearTimers = () => {
-    timers.forEach((id) => window.clearTimeout(id));
-    timers = [];
+  const addTimer = (fn, ms) => timers.push(window.setTimeout(fn, ms));
+  const clearTimers = () => { timers.forEach(window.clearTimeout); timers = []; };
+
+  const replay = (el, cls) => {
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
   };
 
-  const flashAction = () => {
-    action.classList.remove('pop');
-    void action.offsetWidth;
-    action.classList.add('pop');
+  const resetVisuals = () => {
+    app.classList.remove('running', 'finished');
+    covers.forEach((el) => el.classList.remove('show'));
+    pops.forEach((el) => el.classList.remove('show'));
+    shineLoop.classList.remove('show', 'pulse');
+    cracker.classList.remove('show');
   };
 
   const reset = () => {
     clearTimers();
     running = false;
-    app.classList.remove('running', 'finished');
-    patches.forEach((patch) => patch.classList.remove('show'));
-    bursts.forEach((burst) => burst.classList.remove('show'));
-    action.classList.remove('pop');
+    resetVisuals();
     audio.pause();
-    audio.currentTime = 0;
+    try { audio.currentTime = 0; } catch (_) {}
+  };
+
+  const cleanGerm = (index) => {
+    covers[index]?.classList.add('show');
+    pops[index]?.classList.add('show');
+    replay(shineLoop, 'pulse');
   };
 
   const finish = () => {
+    if (!running) return;
     clearTimers();
     running = false;
     app.classList.remove('running');
     app.classList.add('finished');
-    patches.forEach((patch) => patch.classList.add('show'));
-    bursts.forEach((burst) => burst.classList.add('show'));
-    flashAction();
+    covers.forEach((el) => el.classList.add('show'));
+    shineLoop.classList.add('show');
+    replay(cracker, 'show');
   };
 
   const start = async () => {
@@ -52,37 +63,20 @@
     running = true;
     app.classList.add('running');
 
-    CLEAN_TIMES.forEach((sec, index) => {
-      timers.push(window.setTimeout(() => {
-        patches[index]?.classList.add('show');
-        bursts[index]?.classList.add('show');
-        flashAction();
-      }, sec * 1000));
-    });
-
-    ACTION_TIMES.forEach((sec) => {
-      timers.push(window.setTimeout(flashAction, sec * 1000));
-    });
-
-    timers.push(window.setTimeout(finish, TOTAL_SECONDS * 1000));
+    CLEAN_TIMES.forEach((sec, index) => addTimer(() => cleanGerm(index), sec * 1000));
+    addTimer(() => shineLoop.classList.add('show'), 60 * 1000);
+    ACTION_TIMES.forEach((sec) => addTimer(() => replay(shineLoop, 'pulse'), sec * 1000));
+    addTimer(finish, SAFE_FINISH_SECONDS * 1000);
 
     try {
       audio.currentTime = 0;
       await audio.play();
     } catch (_) {
-      // iPhone/iPadで再生開始が遅れても、画面進行は止めない。
+      // iPhone/iPadで再生開始が遅れても画面進行は維持する。
     }
   };
 
-  button.addEventListener('click', () => {
-    if (!running) start();
-  }, { passive: true });
-
-  audio.addEventListener('ended', () => {
-    if (running) finish();
-  });
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && running) reset();
-  });
+  button.addEventListener('click', () => { if (!running) start(); }, { passive: true });
+  audio.addEventListener('ended', finish);
+  document.addEventListener('visibilitychange', () => { if (document.hidden && running) reset(); });
 })();
