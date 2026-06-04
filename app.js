@@ -4,7 +4,7 @@
   const STAGES = ['stage0.jpg', 'stage1.jpg', 'stage2.jpg', 'stage3.jpg'];
   const CHANGE_TIMES = [23, 45, 60];
   const FINISH_SECONDS = 90;
-  const CLIMAX_SECONDS = 82;
+  const CLIMAX_SECONDS = 90;
 
   const app = document.getElementById('app');
   const button = document.getElementById('startButton');
@@ -68,6 +68,7 @@
     if (!running || finished) return;
     finished = true;
     app.classList.add('finished');
+    app.classList.add('climax-cleaning');
     bigStars.classList.add('on');
     bubbleParty.classList.add('on');
     replay(celebration, 'show');
@@ -79,17 +80,16 @@
     running = true;
     app.classList.add('running');
 
-    // 0〜10秒は画面を落ち着かせる。10秒後から泡と星を大きく出す。
+    // 0〜10秒は画面を落ち着かせる。10秒後から泡だけ出す。全体キラキラは90秒のごほうびまで出さない。
     CHANGE_TIMES.forEach((sec, i) => addTimer(() => setStage(i + 1), sec * 1000));
     addTimer(() => {
-      bigStars.classList.add('on');
       bubbleParty.classList.add('on');
       app.classList.add('early-cleaning');
     }, 10 * 1000);
     addTimer(() => app.classList.add('first-cleaning'), 23 * 1000);
     addTimer(() => app.classList.add('mid-cleaning'), 45 * 1000);
     addTimer(() => app.classList.add('sparkle-party'), 60 * 1000);
-    addTimer(() => app.classList.add('climax-cleaning'), CLIMAX_SECONDS * 1000);
+    // クライマックスは90秒終了時に finish() の中で開始。
     addTimer(finish, FINISH_SECONDS * 1000);
 
     try {
