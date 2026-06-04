@@ -25,25 +25,13 @@
   const clearTimers = () => { timers.forEach(window.clearTimeout); timers = []; };
   const replay = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
 
-  const speak = (text) => {
-    try {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'ja-JP';
-      u.rate = 1.05;
-      u.pitch = 1.25;
-      u.volume = 1;
-      window.speechSynthesis.speak(u);
-    } catch (_) {}
-  };
+
 
   const setStage = (index) => {
     stageImage.classList.add('switching');
     window.setTimeout(() => {
       stageImage.src = STAGES[index];
       if (index === 3) stageImage.classList.add('clean-mode');
-      replay(cleanFlash, 'show');
       window.setTimeout(() => stageImage.classList.remove('switching'), 190);
     }, 80);
   };
@@ -56,7 +44,7 @@
     bigStars.classList.remove('on');
     bubbleParty.classList.remove('on');
     celebration.classList.remove('show');
-    app.classList.remove('sparkle-party');
+    app.classList.remove('ambient-cleaning', 'mid-cleaning', 'sparkle-party');
   };
 
   const reset = () => {
@@ -83,9 +71,14 @@
     running = true;
     app.classList.add('running');
 
+    // v9: 最初から小さめの泡と星を出し、時間経過で段階的に増やす。白モヤ演出は使わない。
+    bigStars.classList.add('on');
+    bubbleParty.classList.add('on');
+    app.classList.add('ambient-cleaning');
+
     CHANGE_TIMES.forEach((sec, i) => addTimer(() => setStage(i + 1), sec * 1000));
-    addTimer(() => { bigStars.classList.add('on'); bubbleParty.classList.add('on'); app.classList.add('sparkle-party'); }, 60 * 1000);
-    SPARK_TIMES.forEach((sec) => addTimer(() => replay(cleanFlash, 'show'), sec * 1000));
+    addTimer(() => app.classList.add('mid-cleaning'), 45 * 1000);
+    addTimer(() => app.classList.add('sparkle-party'), 60 * 1000);
     addTimer(finish, FINISH_SECONDS * 1000);
 
     try {

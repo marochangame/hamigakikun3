@@ -57,3 +57,45 @@ body{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 /* v8: 開始画面の案内文。音声案内は削除し、文字で一度だけ伝える */
 .start-instruction{position:absolute;left:50%;bottom:5.2%;transform:translateX(-50%);z-index:42;display:flex;align-items:center;justify-content:center;max-width:78%;padding:1.4vw 2.6vw;border-radius:999px;background:rgba(255,255,255,.88);color:#2b91d1;font-weight:900;font-size:clamp(20px,4.2vw,42px);letter-spacing:.02em;text-shadow:0 .18vw 0 rgba(255,255,255,.96);box-shadow:0 .7vw 2vw rgba(70,150,190,.18);pointer-events:none;white-space:nowrap}.app.running .start-instruction,.app.finished .start-instruction{display:none}
 @media (orientation:portrait){.start-instruction{display:none}.turn-text{font-size:7.2vw;text-align:center;line-height:1.22;padding:0 6vw}}
+
+
+/* v9: 横向き後の説明文字は削除。縦向きの時だけ案内する */
+.start-instruction{display:none!important}
+.turn-text{font-size:8vw;text-align:center;line-height:1.22;padding:0 6vw}
+.turn-text::before{content:""}
+.portrait-guide .turn-text{font-size:8vw}
+.portrait-guide .turn-text{color:#2b91d1}
+
+/* v9: 白モヤ・白フラッシュを完全停止。見え方をぼかさない */
+.clean-flash,.clean-flash.show{display:none!important;opacity:0!important;animation:none!important;background:none!important}
+.stage-art.switching{opacity:1!important;filter:none!important}
+.stage-art.clean-mode{filter:saturate(1.04) brightness(1.02)!important}
+
+/* v9: 最初から泡と星を出す。後半ほど大きく・多く・楽しくする */
+.big-stars,.bubble-party{opacity:0;transition:opacity .35s ease}
+.app.ambient-cleaning .big-stars,.app.ambient-cleaning .bubble-party{opacity:1}
+.app.ambient-cleaning .big-stars i{width:3.2vw;height:3.2vw;animation-duration:1.6s;filter:drop-shadow(0 0 7px rgba(255,247,120,.75))}
+.app.ambient-cleaning .big-stars i:nth-child(n+13){display:none}
+.app.ambient-cleaning .bubble-party i{animation-duration:2.8s;transform:scale(.8)}
+.app.ambient-cleaning .bubble-party i:nth-child(n+8){display:none}
+
+.app.mid-cleaning .big-stars i{width:4.6vw;height:4.6vw;animation-duration:1.35s;filter:drop-shadow(0 0 9px rgba(255,247,120,.9))}
+.app.mid-cleaning .big-stars i:nth-child(n+13){display:block;width:3.5vw;height:3.5vw}
+.app.mid-cleaning .bubble-party i{animation-duration:2.35s}
+.app.mid-cleaning .bubble-party i:nth-child(n+8){display:block}
+
+.app.sparkle-party .big-stars i{width:6.4vw;height:6.4vw;animation-duration:1.05s;filter:drop-shadow(0 0 12px rgba(255,247,120,1))}
+.app.sparkle-party .big-stars i:nth-child(n+13){display:block;width:4.4vw;height:4.4vw}
+.app.sparkle-party .bubble-party i{animation-duration:2.0s}
+.app.sparkle-party .bubble-party i:nth-child(n+8){display:block}
+
+/* 星の配置を口の中中心に整理。歯やリンゴを邪魔しすぎない */
+.big-stars i:nth-child(1){left:20%;top:32%}.big-stars i:nth-child(2){left:31%;top:45%;animation-delay:.15s}.big-stars i:nth-child(3){left:43%;top:35%;animation-delay:.30s}.big-stars i:nth-child(4){left:55%;top:48%;animation-delay:.45s}.big-stars i:nth-child(5){left:68%;top:36%;animation-delay:.60s}.big-stars i:nth-child(6){left:79%;top:47%;animation-delay:.75s}.big-stars i:nth-child(7){left:25%;top:65%;animation-delay:.90s}.big-stars i:nth-child(8){left:38%;top:70%;animation-delay:1.05s}.big-stars i:nth-child(9){left:52%;top:65%;animation-delay:.25s}.big-stars i:nth-child(10){left:66%;top:66%;animation-delay:.55s}.big-stars i:nth-child(11){left:74%;top:58%;animation-delay:.85s}.big-stars i:nth-child(12){left:48%;top:56%;animation-delay:1.15s}
+.big-stars i:nth-child(13){left:18%;top:53%;animation-delay:.10s}.big-stars i:nth-child(14){left:29%;top:37%;animation-delay:.22s}.big-stars i:nth-child(15){left:36%;top:58%;animation-delay:.34s}.big-stars i:nth-child(16){left:46%;top:42%;animation-delay:.46s}.big-stars i:nth-child(17){left:58%;top:58%;animation-delay:.58s}.big-stars i:nth-child(18){left:71%;top:43%;animation-delay:.70s}.big-stars i:nth-child(19){left:82%;top:61%;animation-delay:.82s}.big-stars i:nth-child(20){left:62%;top:73%;animation-delay:.94s}.big-stars i:nth-child(21){left:52%;top:28%;animation-delay:1.06s}.big-stars i:nth-child(22){left:33%;top:73%;animation-delay:1.18s}.big-stars i:nth-child(23){left:78%;top:30%;animation-delay:1.30s}.big-stars i:nth-child(24){left:44%;top:73%;animation-delay:1.42s}
+
+/* 泡はふわふわ上がるだけ。白く画面を覆わない */
+.bubble-party i{background:radial-gradient(circle at 35% 30%,#fff 0 12%,rgba(162,230,255,.92) 13% 42%,rgba(255,255,255,0) 61%);box-shadow:0 0 10px rgba(100,205,255,.55)}
+
+/* 最後のクラッカーは中央のみ。リンゴ横には何も出さない */
+.app.finished .apple-hit::after{display:none!important}
+.apple-glow{display:none!important}
