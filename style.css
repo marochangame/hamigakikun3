@@ -99,3 +99,54 @@ body{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 /* 最後のクラッカーは中央のみ。リンゴ横には何も出さない */
 .app.finished .apple-hit::after{display:none!important}
 .apple-glow{display:none!important}
+
+/* v10 神アプリ調整：大きく・わかりやすく・ダサい謎演出なし */
+/* 横向き画面では説明文なし。縦向き案内は full 文言を残す */
+.start-instruction{display:none!important}
+.portrait-guide .turn-text{font-size:7.2vw;line-height:1.22;color:#2b91d1;text-align:center;padding:0 7vw;font-weight:900}
+
+/* リンゴ周辺の黄色い謎丸・発光は完全禁止 */
+.apple-glow,.app.finished .apple-glow,.app.finished .apple-hit::after{display:none!important;opacity:0!important;animation:none!important}
+
+/* 画像切替時に白く薄くしない */
+.stage-art.switching{opacity:1!important;filter:none!important}.stage-art.clean-mode{filter:saturate(1.05) brightness(1.02)!important}
+
+/* バイキン消去時のピカッ。白モヤではなく、場所がわかる大きな星バースト */
+.clean-flash,.clean-flash.show{display:block!important;background:none!important;opacity:0;animation:none;pointer-events:none;z-index:28}
+.clean-flash::before,.clean-flash::after{content:"";position:absolute;left:var(--flash-x,50%);top:var(--flash-y,50%);transform:translate(-50%,-50%) scale(.4);opacity:0;pointer-events:none}
+.clean-flash::before{width:22vmin;height:22vmin;background:radial-gradient(circle,#fff 0 12%,#fff36c 13% 30%,rgba(255,207,58,.76) 31% 42%,rgba(255,207,58,0) 68%);clip-path:polygon(50% 0,59% 35%,96% 19%,70% 50%,96% 81%,59% 65%,50% 100%,41% 65%,4% 81%,30% 50%,4% 19%,41% 35%);filter:drop-shadow(0 0 12px rgba(255,240,80,.95))}
+.clean-flash::after{width:32vmin;height:32vmin;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.75) 0 12%,rgba(255,236,92,.48) 13% 34%,rgba(255,255,255,0) 64%)}
+.clean-flash.show::before{animation:cleanStarPopV10 .78s ease-out forwards}.clean-flash.show::after{animation:cleanRingPopV10 .78s ease-out forwards}
+@keyframes cleanStarPopV10{0%{opacity:0;transform:translate(-50%,-50%) scale(.25) rotate(-18deg)}28%{opacity:1;transform:translate(-50%,-50%) scale(1.08) rotate(8deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.45) rotate(24deg)}}
+@keyframes cleanRingPopV10{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}35%{opacity:.9;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.8)}}
+
+/* 基本は非表示。10秒後から大きく出す。うっすら禁止。 */
+.big-stars,.bubble-party{opacity:0;transition:opacity .22s ease;z-index:22}.big-stars.on,.bubble-party.on{opacity:1}
+.big-stars i{animation:starPopV10 1.15s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(255,242,74,1));opacity:0}.big-stars i::before{background:#ffe34b}.big-stars i:nth-child(3n)::before{background:#ff8bd1}.big-stars i:nth-child(4n)::before{background:#79d9ff}.big-stars i:nth-child(5n)::before{background:#9cf06e}.big-stars i::after{background:#fff}
+@keyframes starPopV10{0%,100%{opacity:.15;transform:scale(.55) rotate(-8deg)}36%{opacity:1;transform:scale(1.24) rotate(12deg)}68%{opacity:.8;transform:scale(.95) rotate(26deg)}}
+.bubble-party i{background:radial-gradient(circle at 35% 30%,#fff 0 13%,rgba(153,229,255,.96) 14% 42%,rgba(255,255,255,0) 64%);box-shadow:0 0 14px rgba(80,205,255,.70);animation:bubbleRiseV10 2.1s ease-in-out infinite;opacity:0}
+@keyframes bubbleRiseV10{0%{opacity:0;transform:translateY(18px) scale(.65)}18%{opacity:1}72%{opacity:.85}100%{opacity:0;transform:translateY(-72px) scale(1.32)}}
+
+/* 10秒〜：大きいけれど数は抑えめ。見てわかる泡と星 */
+.app.early-cleaning .big-stars i{width:5.4vw;height:5.4vw;animation-duration:1.35s}.app.early-cleaning .big-stars i:nth-child(n+11){display:none}.app.early-cleaning .bubble-party i{animation-duration:2.55s}.app.early-cleaning .bubble-party i:nth-child(n+8){display:none}
+
+/* 23秒〜：1匹消えたので少し増やす */
+.app.first-cleaning .big-stars i{width:6.0vw;height:6.0vw}.app.first-cleaning .big-stars i:nth-child(n+11):nth-child(-n+16){display:block;width:4.8vw;height:4.8vw}.app.first-cleaning .bubble-party i:nth-child(n+8):nth-child(-n+10){display:block}
+
+/* 45秒〜：倍増。背景に埋もれない大きさ */
+.app.mid-cleaning .big-stars i{width:6.8vw;height:6.8vw;animation-duration:1.12s}.app.mid-cleaning .big-stars i:nth-child(n+11){display:block;width:5.0vw;height:5.0vw}.app.mid-cleaning .bubble-party i{animation-duration:2.2s}.app.mid-cleaning .bubble-party i:nth-child(n+8){display:block}
+
+/* 60秒〜：全部消えた後。ピカピカが明確にわかる */
+.app.sparkle-party .big-stars i{width:7.8vw;height:7.8vw;animation-duration:.98s;filter:drop-shadow(0 0 16px rgba(255,240,54,1))}.app.sparkle-party .big-stars i:nth-child(n+11){width:5.8vw;height:5.8vw}.app.sparkle-party .bubble-party i{animation-duration:1.95s}
+
+/* 82秒〜：クライマックス。ごちゃつかせず、画面中央〜口内に大星がポンポン出る */
+.app.climax-cleaning .big-stars i{width:9.2vw;height:9.2vw;animation-duration:.82s;filter:drop-shadow(0 0 20px rgba(255,235,48,1))}.app.climax-cleaning .big-stars i:nth-child(n+11){width:6.8vw;height:6.8vw}.app.climax-cleaning .bubble-party i{animation-duration:1.65s;box-shadow:0 0 18px rgba(80,205,255,.9)}
+
+/* 星配置：歯とリンゴを隠しすぎず、口の中で大きく見える場所に限定 */
+.big-stars i:nth-child(1){left:20%;top:33%}.big-stars i:nth-child(2){left:31%;top:47%;animation-delay:.14s}.big-stars i:nth-child(3){left:42%;top:35%;animation-delay:.28s}.big-stars i:nth-child(4){left:54%;top:48%;animation-delay:.42s}.big-stars i:nth-child(5){left:67%;top:36%;animation-delay:.56s}.big-stars i:nth-child(6){left:78%;top:48%;animation-delay:.70s}.big-stars i:nth-child(7){left:26%;top:64%;animation-delay:.84s}.big-stars i:nth-child(8){left:39%;top:68%;animation-delay:.98s}.big-stars i:nth-child(9){left:53%;top:64%;animation-delay:.35s}.big-stars i:nth-child(10){left:66%;top:65%;animation-delay:.63s}.big-stars i:nth-child(11){left:18%;top:52%;animation-delay:.10s}.big-stars i:nth-child(12){left:29%;top:39%;animation-delay:.22s}.big-stars i:nth-child(13){left:36%;top:58%;animation-delay:.34s}.big-stars i:nth-child(14){left:47%;top:43%;animation-delay:.46s}.big-stars i:nth-child(15){left:58%;top:57%;animation-delay:.58s}.big-stars i:nth-child(16){left:71%;top:43%;animation-delay:.70s}.big-stars i:nth-child(17){left:82%;top:61%;animation-delay:.82s}.big-stars i:nth-child(18){left:61%;top:72%;animation-delay:.94s}.big-stars i:nth-child(19){left:52%;top:28%;animation-delay:1.06s}.big-stars i:nth-child(20){left:33%;top:72%;animation-delay:1.18s}.big-stars i:nth-child(21){left:76%;top:30%;animation-delay:1.30s}.big-stars i:nth-child(22){left:45%;top:72%;animation-delay:1.42s}.big-stars i:nth-child(23){left:23%;top:45%;animation-delay:.5s}.big-stars i:nth-child(24){left:74%;top:56%;animation-delay:.8s}
+
+/* 泡配置：歯ブラシ周りと口内中心。大きめで幼児にもわかる */
+.bubble-party i:nth-child(1){left:20%;top:68%;width:5.0vw;height:5.0vw}.bubble-party i:nth-child(2){left:30%;top:55%;width:4.1vw;height:4.1vw;animation-delay:.18s}.bubble-party i:nth-child(3){left:39%;top:70%;width:4.6vw;height:4.6vw;animation-delay:.36s}.bubble-party i:nth-child(4){left:50%;top:50%;width:3.8vw;height:3.8vw;animation-delay:.54s}.bubble-party i:nth-child(5){left:61%;top:70%;width:4.8vw;height:4.8vw;animation-delay:.72s}.bubble-party i:nth-child(6){left:72%;top:54%;width:4.2vw;height:4.2vw;animation-delay:.90s}.bubble-party i:nth-child(7){left:81%;top:68%;width:5.0vw;height:5.0vw;animation-delay:1.08s}.bubble-party i:nth-child(8){left:34%;top:39%;width:3.7vw;height:3.7vw;animation-delay:1.26s}.bubble-party i:nth-child(9){left:56%;top:36%;width:4.0vw;height:4.0vw;animation-delay:1.44s}.bubble-party i:nth-child(10){left:68%;top:42%;width:3.8vw;height:3.8vw;animation-delay:1.62s}.bubble-party i:nth-child(11){left:43%;top:61%;width:4.2vw;height:4.2vw;animation-delay:.81s}.bubble-party i:nth-child(12){left:75%;top:72%;width:4.1vw;height:4.1vw;animation-delay:.27s}
+
+/* 終了：中央だけに、誰が見てもクラッカー。リンゴ横には出さない */
+.celebration{z-index:46}.celebration.show{opacity:1}.burst{display:none!important}.popper{left:50%;top:52%;width:42vmin;height:42vmin;transform:translate(-50%,-50%) rotate(-18deg);animation:popperClearV10 2.4s ease-out forwards}.popper::before{content:"";position:absolute;left:36%;top:41%;width:34%;height:46%;background:repeating-linear-gradient(45deg,#ff4f73 0 16%,#fff 16% 32%);clip-path:polygon(6% 100%,100% 66%,43% 0);border:.8vmin solid #b9332b;border-radius:2vmin;box-shadow:0 1.3vmin 2.3vmin rgba(0,0,0,.24)}.popper::after{content:"";position:absolute;left:49%;top:4%;width:9vmin;height:28vmin;border-radius:50%;border-left:2.1vmin solid #ff4f83;border-top:2.1vmin solid transparent;transform:rotate(-42deg);filter:drop-shadow(0 0 .9vmin #fff);background:none!important;animation:none!important}.popper span{position:absolute;left:44%;top:0;width:22vmin;height:26vmin;border:0;filter:none}.popper span::before,.popper span::after{content:"";position:absolute;border-radius:50%;background:none;border-left:2vmin solid #33cfff;width:11vmin;height:27vmin;left:5vmin;top:0;transform:rotate(30deg)}.popper span::after{border-left-color:#ffd63d;left:-5vmin;top:4vmin;transform:rotate(-38deg)}.celebration b{width:3vmin;height:7.5vmin;border-radius:1.1vmin}.celebration.show b{animation:confettiCleanV10 2.45s ease-out forwards}@keyframes popperClearV10{0%{opacity:0;transform:translate(-50%,-42%) scale(.35) rotate(-35deg)}12%{opacity:1;transform:translate(-50%,-52%) scale(1.16) rotate(-18deg)}72%{opacity:1;transform:translate(-50%,-54%) scale(1) rotate(-10deg)}100%{opacity:0;transform:translate(-50%,-60%) scale(.9) rotate(-4deg)}}@keyframes confettiCleanV10{0%{opacity:0;transform:translate(0,0) scale(.45) rotate(0)}12%{opacity:1}82%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.25) rotate(760deg)}}

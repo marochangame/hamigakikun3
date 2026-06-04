@@ -4,7 +4,7 @@
   const STAGES = ['stage0.jpg', 'stage1.jpg', 'stage2.jpg', 'stage3.jpg'];
   const CHANGE_TIMES = [23, 45, 60];
   const FINISH_SECONDS = 90;
-  const SPARK_TIMES = [8, 16, 23, 31, 39, 45, 53, 60, 67, 74, 81, 88];
+  const CLIMAX_SECONDS = 82;
 
   const app = document.getElementById('app');
   const button = document.getElementById('startButton');
@@ -25,26 +25,34 @@
   const clearTimers = () => { timers.forEach(window.clearTimeout); timers = []; };
   const replay = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
 
-
+  const flashAt = (x, y) => {
+    cleanFlash.style.setProperty('--flash-x', x);
+    cleanFlash.style.setProperty('--flash-y', y);
+    replay(cleanFlash, 'show');
+  };
 
   const setStage = (index) => {
     stageImage.classList.add('switching');
     window.setTimeout(() => {
       stageImage.src = STAGES[index];
       if (index === 3) stageImage.classList.add('clean-mode');
-      window.setTimeout(() => stageImage.classList.remove('switching'), 190);
-    }, 80);
+      window.setTimeout(() => stageImage.classList.remove('switching'), 130);
+    }, 45);
+
+    // バイキンが消えた場所に、はっきり大きい「ピカッ」を出す。
+    if (index === 1) flashAt('27%', '39%');
+    if (index === 2) flashAt('70%', '39%');
+    if (index === 3) flashAt('50%', '50%');
   };
 
   const resetVisuals = () => {
-    app.classList.remove('running', 'finished');
+    app.className = 'app';
     stageImage.src = STAGES[0];
     stageImage.classList.remove('switching', 'clean-mode');
     cleanFlash.classList.remove('show');
     bigStars.classList.remove('on');
     bubbleParty.classList.remove('on');
     celebration.classList.remove('show');
-    app.classList.remove('ambient-cleaning', 'mid-cleaning', 'sparkle-party');
   };
 
   const reset = () => {
@@ -63,7 +71,7 @@
     bigStars.classList.add('on');
     bubbleParty.classList.add('on');
     replay(celebration, 'show');
-    // 音源を切らない。画面だけ終了演出に入る。
+    // 音源は強制停止しない。最後まで自然に流す。
   };
 
   const start = async () => {
@@ -71,14 +79,17 @@
     running = true;
     app.classList.add('running');
 
-    // v9: 最初から小さめの泡と星を出し、時間経過で段階的に増やす。白モヤ演出は使わない。
-    bigStars.classList.add('on');
-    bubbleParty.classList.add('on');
-    app.classList.add('ambient-cleaning');
-
+    // 0〜10秒は画面を落ち着かせる。10秒後から泡と星を大きく出す。
     CHANGE_TIMES.forEach((sec, i) => addTimer(() => setStage(i + 1), sec * 1000));
+    addTimer(() => {
+      bigStars.classList.add('on');
+      bubbleParty.classList.add('on');
+      app.classList.add('early-cleaning');
+    }, 10 * 1000);
+    addTimer(() => app.classList.add('first-cleaning'), 23 * 1000);
     addTimer(() => app.classList.add('mid-cleaning'), 45 * 1000);
     addTimer(() => app.classList.add('sparkle-party'), 60 * 1000);
+    addTimer(() => app.classList.add('climax-cleaning'), CLIMAX_SECONDS * 1000);
     addTimer(finish, FINISH_SECONDS * 1000);
 
     try {
@@ -91,15 +102,9 @@
 
   button.addEventListener('click', () => { if (!running || finished) start(); }, { passive: true });
   audio.addEventListener('ended', () => {
-    if (running) {
-      running = false;
-      app.classList.remove('running');
-      app.classList.add('finished');
-      bigStars.classList.add('on');
-      bubbleParty.classList.add('on');
-        if (!finished) replay(celebration, 'show');
-      finished = true;
-    }
+    if (running && !finished) finish();
+    running = false;
+    app.classList.remove('running');
   });
   document.addEventListener('visibilitychange', () => { if (document.hidden && running) reset(); });
 })();
