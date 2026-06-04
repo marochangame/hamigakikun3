@@ -150,3 +150,44 @@ body{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 
 /* 終了：中央だけに、誰が見てもクラッカー。リンゴ横には出さない */
 .celebration{z-index:46}.celebration.show{opacity:1}.burst{display:none!important}.popper{left:50%;top:52%;width:42vmin;height:42vmin;transform:translate(-50%,-50%) rotate(-18deg);animation:popperClearV10 2.4s ease-out forwards}.popper::before{content:"";position:absolute;left:36%;top:41%;width:34%;height:46%;background:repeating-linear-gradient(45deg,#ff4f73 0 16%,#fff 16% 32%);clip-path:polygon(6% 100%,100% 66%,43% 0);border:.8vmin solid #b9332b;border-radius:2vmin;box-shadow:0 1.3vmin 2.3vmin rgba(0,0,0,.24)}.popper::after{content:"";position:absolute;left:49%;top:4%;width:9vmin;height:28vmin;border-radius:50%;border-left:2.1vmin solid #ff4f83;border-top:2.1vmin solid transparent;transform:rotate(-42deg);filter:drop-shadow(0 0 .9vmin #fff);background:none!important;animation:none!important}.popper span{position:absolute;left:44%;top:0;width:22vmin;height:26vmin;border:0;filter:none}.popper span::before,.popper span::after{content:"";position:absolute;border-radius:50%;background:none;border-left:2vmin solid #33cfff;width:11vmin;height:27vmin;left:5vmin;top:0;transform:rotate(30deg)}.popper span::after{border-left-color:#ffd63d;left:-5vmin;top:4vmin;transform:rotate(-38deg)}.celebration b{width:3vmin;height:7.5vmin;border-radius:1.1vmin}.celebration.show b{animation:confettiCleanV10 2.45s ease-out forwards}@keyframes popperClearV10{0%{opacity:0;transform:translate(-50%,-42%) scale(.35) rotate(-35deg)}12%{opacity:1;transform:translate(-50%,-52%) scale(1.16) rotate(-18deg)}72%{opacity:1;transform:translate(-50%,-54%) scale(1) rotate(-10deg)}100%{opacity:0;transform:translate(-50%,-60%) scale(.9) rotate(-4deg)}}@keyframes confettiCleanV10{0%{opacity:0;transform:translate(0,0) scale(.45) rotate(0)}12%{opacity:1}82%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1.25) rotate(760deg)}}
+
+
+/* v12 神マーケティング調整：大きく・わかりやすく・少数精鋭。ギラギラ禁止。 */
+/* 縦向き案内は残す／横向き後の文字は出さない */
+.start-instruction{display:none!important}
+.portrait-guide .turn-text{font-size:7.2vw;line-height:1.22;color:#2b91d1;text-align:center;padding:0 7vw;font-weight:900}
+
+/* 画面全体を白くしない。謎光線・リンゴ横演出は禁止 */
+.stage-art.switching{opacity:1!important;filter:none!important}.stage-art.clean-mode{filter:saturate(1.04) brightness(1.02)!important}
+.apple-glow,.app.finished .apple-glow,.app.finished .apple-hit::after{display:none!important;opacity:0!important;animation:none!important}
+.burst{display:none!important}
+
+/* 10秒後からの泡・星：大きいけれど数は絞る */
+.big-stars{z-index:18!important}.bubble-party{z-index:17!important}
+.big-stars i{width:5.2vw!important;height:5.2vw!important;filter:drop-shadow(0 0 10px rgba(255,232,70,.95))!important;animation:starPopV12 1.35s ease-in-out infinite!important}
+.big-stars i::before{background:#ffe45a!important}.big-stars i:nth-child(3n)::before{background:#ff9bd7!important}.big-stars i:nth-child(4n)::before{background:#8bdcff!important}.big-stars i:nth-child(5n)::before{background:#9beb77!important}.big-stars i::after{background:#fff!important}
+@keyframes starPopV12{0%,100%{opacity:.18;transform:scale(.55) rotate(-8deg)}38%{opacity:1;transform:scale(1.15) rotate(12deg)}70%{opacity:.72;transform:scale(.86) rotate(22deg)}}
+.bubble-party i{background:radial-gradient(circle at 35% 30%,#fff 0 14%,rgba(154,230,255,.94) 15% 43%,rgba(255,255,255,0) 64%)!important;box-shadow:0 0 12px rgba(80,205,255,.62)!important;animation:bubbleRiseV12 2.4s ease-in-out infinite!important}
+@keyframes bubbleRiseV12{0%{opacity:0;transform:translateY(18px) scale(.72)}20%{opacity:.95}76%{opacity:.8}100%{opacity:0;transform:translateY(-58px) scale(1.18)}}
+
+/* 状態ごとに少しずつ増やす。ずっとMAXにはしない */
+.app.early-cleaning .big-stars i:nth-child(n+7){display:none!important}.app.early-cleaning .bubble-party i:nth-child(n+6){display:none!important}
+.app.early-cleaning.first-cleaning .big-stars i:nth-child(-n+9){display:block!important}.app.early-cleaning.first-cleaning .big-stars i:nth-child(n+10){display:none!important}.app.early-cleaning.first-cleaning .bubble-party i:nth-child(-n+7){display:block!important}.app.early-cleaning.first-cleaning .bubble-party i:nth-child(n+8){display:none!important}
+.app.early-cleaning.first-cleaning.mid-cleaning .big-stars i:nth-child(-n+12){display:block!important}.app.early-cleaning.first-cleaning.mid-cleaning .big-stars i:nth-child(n+13){display:none!important}.app.early-cleaning.first-cleaning.mid-cleaning .bubble-party i:nth-child(-n+9){display:block!important}.app.early-cleaning.first-cleaning.mid-cleaning .bubble-party i:nth-child(n+10){display:none!important}
+.app.sparkle-party .big-stars i:nth-child(-n+16){display:block!important}.app.sparkle-party .big-stars i:nth-child(n+17){display:none!important}.app.sparkle-party .bubble-party i:nth-child(-n+12){display:block!important}
+.app.climax-cleaning .big-stars i:nth-child(-n+18){display:block!important}.app.climax-cleaning .big-stars i:nth-child(n+19){display:none!important}
+
+/* 寂しく見える“消えた場所”専用の、上品な泡＋星。赤丸や白モヤではなく、ピカピカ感だけ足す */
+.clean-decor{position:absolute;inset:0;z-index:24;pointer-events:none;opacity:1}.clean-decor i{position:absolute;display:none;pointer-events:none}.clean-decor .star{width:7.2vw;height:7.2vw;filter:drop-shadow(0 0 12px rgba(255,236,90,.95));animation:cleanLocalStar 1.25s ease-in-out infinite}.clean-decor .star::before,.clean-decor .star::after{content:"";position:absolute;inset:0;background:#ffe35a;clip-path:polygon(50% 0,60% 36%,100% 50%,60% 64%,50% 100%,40% 64%,0 50%,40% 36%)}.clean-decor .star::after{background:#fff;inset:25%}.clean-decor .star.small{width:4.6vw;height:4.6vw;animation-delay:.42s;filter:drop-shadow(0 0 9px rgba(255,160,215,.85))}.clean-decor .star.small::before{background:#ff9bd7}.clean-decor .bubble{width:5.2vw;height:5.2vw;border-radius:50%;background:radial-gradient(circle at 34% 28%,#fff 0 16%,rgba(159,229,255,.9) 17% 45%,rgba(255,255,255,0) 66%);box-shadow:0 0 12px rgba(80,205,255,.62);animation:cleanLocalBubble 2.1s ease-in-out infinite}.clean-decor .bubble.small{width:3.6vw;height:3.6vw;animation-delay:.65s}
+.clean-decor .left.star{left:23%;top:32%}.clean-decor .left.star.small{left:31%;top:41%}.clean-decor .left.bubble{left:27%;top:50%}.clean-decor .left.bubble.small{left:21%;top:45%}
+.clean-decor .center.star{left:48%;top:42%}.clean-decor .center.star.small{left:41%;top:55%}.clean-decor .center.bubble{left:50%;top:58%}.clean-decor .center.bubble.small{left:45%;top:50%}
+.clean-decor .right.star{left:74%;top:34%}.clean-decor .right.star.small{left:68%;top:47%}.clean-decor .right.bubble{left:72%;top:55%}.clean-decor .right.bubble.small{left:79%;top:47%}
+.app.first-cleaning .clean-decor .left{display:block!important}.app.mid-cleaning .clean-decor .left,.app.mid-cleaning .clean-decor .center{display:block!important}.app.sparkle-party .clean-decor i{display:block!important}.app.climax-cleaning .clean-decor .star{width:8.2vw;height:8.2vw}.app.climax-cleaning .clean-decor .bubble{width:6vw;height:6vw}
+@keyframes cleanLocalStar{0%,100%{opacity:.3;transform:scale(.7) rotate(-8deg)}45%{opacity:1;transform:scale(1.18) rotate(12deg)}75%{opacity:.72;transform:scale(.92) rotate(24deg)}}
+@keyframes cleanLocalBubble{0%{opacity:0;transform:translateY(10px) scale(.75)}18%{opacity:.9}100%{opacity:0;transform:translateY(-34px) scale(1.18)}}
+
+/* 消えた瞬間のピカッは大きい星だけ。白い煙幕にしない */
+.clean-flash,.clean-flash.show{background:none!important;opacity:0;animation:none!important;z-index:29!important}.clean-flash::before,.clean-flash::after{content:"";position:absolute;left:var(--flash-x,50%);top:var(--flash-y,50%);transform:translate(-50%,-50%) scale(.4);opacity:0;pointer-events:none}.clean-flash::before{width:18vmin;height:18vmin;background:#ffe86b;clip-path:polygon(50% 0,60% 36%,100% 50%,60% 64%,50% 100%,40% 64%,0 50%,40% 36%);filter:drop-shadow(0 0 14px rgba(255,235,70,.96))}.clean-flash::after{width:8vmin;height:8vmin;background:#fff;clip-path:polygon(50% 0,60% 36%,100% 50%,60% 64%,50% 100%,40% 64%,0 50%,40% 36%)}.clean-flash.show::before{animation:flashStarV12 .7s ease-out forwards}.clean-flash.show::after{animation:flashStarInnerV12 .7s ease-out forwards}@keyframes flashStarV12{0%{opacity:0;transform:translate(-50%,-50%) scale(.25) rotate(-12deg)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.05) rotate(8deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.45) rotate(22deg)}}@keyframes flashStarInnerV12{0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}30%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+
+/* 終了クラッカーは中央だけ。小さな謎物体を出さない */
+.celebration{z-index:46!important}.popper{left:50%!important;top:52%!important;width:38vmin!important;height:38vmin!important}.celebration b{width:2.8vmin!important;height:7vmin!important}
