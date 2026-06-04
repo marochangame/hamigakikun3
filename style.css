@@ -191,3 +191,51 @@ body{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 
 /* 終了クラッカーは中央だけ。小さな謎物体を出さない */
 .celebration{z-index:46!important}.popper{left:50%!important;top:52%!important;width:38vmin!important;height:38vmin!important}.celebration b{width:2.8vmin!important;height:7vmin!important}
+
+/* v14 神エンジニア調整：泡は「磨いている場所」に、星は「消えた場所」に。バイキンを隠さない。 */
+/* 10秒後からの泡は歯ブラシ周辺に限定。中央・右上のバイキンには被せない。 */
+.bubble-party{z-index:19!important}
+.bubble-party i{
+  background:radial-gradient(circle at 32% 28%,#fff 0 15%,rgba(172,235,255,.96) 16% 46%,rgba(255,255,255,.18) 47% 61%,rgba(255,255,255,0) 72%)!important;
+  box-shadow:0 0 10px rgba(80,205,255,.54)!important;
+  animation:bubbleRiseV14 2.35s ease-in-out infinite!important;
+}
+/* 歯ブラシ・泡ブラシの近くに集中。バイキン領域を避ける。 */
+.bubble-party i:nth-child(1){left:62%!important;top:59%!important;width:3.8vw!important;height:3.8vw!important}
+.bubble-party i:nth-child(2){left:67%!important;top:51%!important;width:3.2vw!important;height:3.2vw!important;animation-delay:.18s!important}
+.bubble-party i:nth-child(3){left:72%!important;top:58%!important;width:3.6vw!important;height:3.6vw!important;animation-delay:.36s!important}
+.bubble-party i:nth-child(4){left:78%!important;top:50%!important;width:3.1vw!important;height:3.1vw!important;animation-delay:.54s!important}
+.bubble-party i:nth-child(5){left:82%!important;top:64%!important;width:3.9vw!important;height:3.9vw!important;animation-delay:.72s!important}
+.bubble-party i:nth-child(6){left:59%!important;top:72%!important;width:3.0vw!important;height:3.0vw!important;animation-delay:.90s!important}
+.bubble-party i:nth-child(7){left:70%!important;top:73%!important;width:3.2vw!important;height:3.2vw!important;animation-delay:1.08s!important}
+.bubble-party i:nth-child(8){left:76%!important;top:72%!important;width:2.8vw!important;height:2.8vw!important;animation-delay:1.26s!important}
+.bubble-party i:nth-child(9){left:85%!important;top:55%!important;width:2.7vw!important;height:2.7vw!important;animation-delay:1.44s!important}
+.bubble-party i:nth-child(10){left:65%!important;top:68%!important;width:2.8vw!important;height:2.8vw!important;animation-delay:1.62s!important}
+.bubble-party i:nth-child(11){left:80%!important;top:73%!important;width:3.0vw!important;height:3.0vw!important;animation-delay:.81s!important}
+.bubble-party i:nth-child(12){left:73%!important;top:47%!important;width:2.8vw!important;height:2.8vw!important;animation-delay:.27s!important}
+@keyframes bubbleRiseV14{0%{opacity:0;transform:translateY(12px) scale(.72)}20%{opacity:.92}72%{opacity:.78}100%{opacity:0;transform:translateY(-34px) scale(1.12)}}
+
+/* バイキンが消えた後の専用演出。星は少数精鋭、泡は小さめで“清潔感”を出す。 */
+.clean-decor{z-index:25!important}
+.clean-decor .star{width:5.8vw!important;height:5.8vw!important;filter:drop-shadow(0 0 9px rgba(255,235,92,.9))!important;animation:cleanLocalStarV14 1.35s ease-in-out infinite!important}
+.clean-decor .star.small{width:3.9vw!important;height:3.9vw!important;opacity:.86!important;animation-delay:.48s!important}
+.clean-decor .bubble{width:3.9vw!important;height:3.9vw!important;background:radial-gradient(circle at 34% 28%,#fff 0 16%,rgba(164,232,255,.9) 17% 46%,rgba(255,255,255,0) 69%)!important;box-shadow:0 0 8px rgba(80,205,255,.5)!important;animation:cleanLocalBubbleV14 2.2s ease-in-out infinite!important}
+.clean-decor .bubble.small{width:2.8vw!important;height:2.8vw!important;animation-delay:.68s!important}
+/* 左は1匹目が消えた後だけ。中央バイキンに近づけない */
+.clean-decor .left.star{left:21.5%!important;top:35.5%!important}.clean-decor .left.star.small{left:29.0%!important;top:43.0%!important}.clean-decor .left.bubble{left:24.0%!important;top:48.5%!important}.clean-decor .left.bubble.small{left:18.5%!important;top:43.5%!important}
+/* 中央は2匹目が消えた後。下の歯に被せすぎない */
+.clean-decor .center.star{left:47.0%!important;top:41.0%!important}.clean-decor .center.star.small{left:41.5%!important;top:53.0%!important}.clean-decor .center.bubble{left:51.0%!important;top:55.0%!important}.clean-decor .center.bubble.small{left:44.0%!important;top:48.5%!important}
+/* 右は最後のバイキンが消えた後だけ。右上バイキンが残っている間は表示しない */
+.clean-decor .right.star{left:73.0%!important;top:36.0%!important}.clean-decor .right.star.small{left:68.0%!important;top:48.0%!important}.clean-decor .right.bubble{left:76.5%!important;top:51.5%!important}.clean-decor .right.bubble.small{left:80.5%!important;top:44.0%!important}
+@keyframes cleanLocalStarV14{0%,100%{opacity:.24;transform:scale(.68) rotate(-8deg)}42%{opacity:.96;transform:scale(1.06) rotate(12deg)}75%{opacity:.62;transform:scale(.86) rotate(22deg)}}
+@keyframes cleanLocalBubbleV14{0%{opacity:0;transform:translateY(8px) scale(.76)}22%{opacity:.82}100%{opacity:0;transform:translateY(-24px) scale(1.08)}}
+
+/* 全体キラキラは90秒以降だけ。下品にならない数に制限。 */
+.big-stars i{width:4.8vw!important;height:4.8vw!important;animation:starPopV14 1.55s ease-in-out infinite!important}
+.app.climax-cleaning .big-stars i:nth-child(-n+8){display:block!important}
+.app.climax-cleaning .big-stars i:nth-child(n+9){display:none!important}
+.big-stars i:nth-child(1){left:20%!important;top:27%!important}.big-stars i:nth-child(2){left:34%!important;top:47%!important}.big-stars i:nth-child(3){left:50%!important;top:32%!important}.big-stars i:nth-child(4){left:65%!important;top:47%!important}.big-stars i:nth-child(5){left:76%!important;top:31%!important}.big-stars i:nth-child(6){left:30%!important;top:67%!important}.big-stars i:nth-child(7){left:49%!important;top:68%!important}.big-stars i:nth-child(8){left:70%!important;top:66%!important}
+@keyframes starPopV14{0%,100%{opacity:.18;transform:scale(.58) rotate(-8deg)}45%{opacity:.9;transform:scale(1.06) rotate(12deg)}72%{opacity:.56;transform:scale(.86) rotate(22deg)}}
+
+/* 消えた瞬間のピカッも煙幕にしない */
+.clean-flash::before{width:15vmin!important;height:15vmin!important;filter:drop-shadow(0 0 12px rgba(255,235,70,.9))!important}.clean-flash::after{width:6.5vmin!important;height:6.5vmin!important}
