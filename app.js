@@ -75,7 +75,6 @@
     bigStars.classList.add('on');
     bubbleParty.classList.add('on');
     replay(celebration, 'show');
-    speak('もう一回歯磨きするならリンゴを押してね');
     // 音源を切らない。画面だけ終了演出に入る。
   };
 
@@ -83,7 +82,6 @@
     reset();
     running = true;
     app.classList.add('running');
-    speak('リンゴでスタートしてね');
 
     CHANGE_TIMES.forEach((sec, i) => addTimer(() => setStage(i + 1), sec * 1000));
     addTimer(() => { bigStars.classList.add('on'); bubbleParty.classList.add('on'); app.classList.add('sparkle-party'); }, 60 * 1000);
