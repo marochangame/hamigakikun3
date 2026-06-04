@@ -1,0 +1,20 @@
+hamigakikun3 last-germ foam guard v18
+
+変更内容：
+- 最後の1匹になった時だけ、中央バイキン周辺の局所泡を非表示。
+- 泡全体は停止せず、ブラシ側の磨いている泡は維持。
+- app.jsの変更は last-germ クラス付与のみ。
+- style.cssに v18 の追記を追加。
+
+変更していないもの：
+- 画角
+- 音声
+- ボタン位置
+- ステージ画像
+- バイキンが消える秒数
+- 星キラキラのv16/v17調整
+- 泡v15の基本演出
+
+アップロード注意：
+- GitHubへ入れるのは index.html / app.js / style.css / 画像 / 音声 / manifest 等の実動ファイルのみ。
+- BACKUP zip はGitHubへ入れないでください。

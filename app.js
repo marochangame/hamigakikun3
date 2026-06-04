@@ -33,6 +33,7 @@
 
   const setStage = (index) => {
     stageImage.classList.add('switching');
+    app.classList.toggle('last-germ', index === 3);
     window.setTimeout(() => {
       stageImage.src = STAGES[index];
       if (index === 3) stageImage.classList.add('clean-mode');
