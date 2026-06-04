@@ -306,3 +306,71 @@ body{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 
 /* 90秒以降も泡数は現状維持。密度を増やさず、質感だけ上げる。 */
 .app.climax-cleaning .bubble-party i{animation-duration:1.18s!important}
+
+/* v16 sparkle polish：星キラキラを上品化。泡・画角・音声・ボタン・ステージ画像・app.jsは変更なし。
+   目的：ピカピカ連打ではなく、余白のある「…キラッ」「ふわっ」感に寄せる。 */
+.big-stars{z-index:18!important;mix-blend-mode:screen!important}
+.big-stars i{
+  width:3.7vw!important;
+  height:3.7vw!important;
+  filter:drop-shadow(0 0 5px rgba(255,246,150,.54)) drop-shadow(0 0 10px rgba(255,255,255,.22))!important;
+  animation:starTwinkleV16 2.75s ease-in-out infinite!important;
+}
+.big-stars i::before{
+  background:rgba(255,235,116,.82)!important;
+}
+.big-stars i::after{
+  inset:30%!important;
+  background:rgba(255,255,255,.92)!important;
+  filter:blur(.3px)!important;
+}
+.big-stars i:nth-child(2n)::before,
+.big-stars i:nth-child(3n)::before,
+.big-stars i:nth-child(4n)::before,
+.big-stars i:nth-child(5n)::before{
+  background:rgba(255,236,132,.72)!important;
+}
+
+/* 90秒のごほうびでも数はさらに絞る。大きい星4つ＋小さい星2つ。 */
+.app.climax-cleaning .big-stars i:nth-child(-n+6){display:block!important}
+.app.climax-cleaning .big-stars i:nth-child(n+7){display:none!important}
+.big-stars i:nth-child(1){left:22%!important;top:30%!important;animation-delay:.10s!important}
+.big-stars i:nth-child(2){left:39%!important;top:48%!important;animation-delay:1.30s!important;width:2.5vw!important;height:2.5vw!important}
+.big-stars i:nth-child(3){left:52%!important;top:33%!important;animation-delay:.72s!important}
+.big-stars i:nth-child(4){left:68%!important;top:49%!important;animation-delay:1.95s!important;width:2.7vw!important;height:2.7vw!important}
+.big-stars i:nth-child(5){left:77%!important;top:32%!important;animation-delay:.38s!important}
+.big-stars i:nth-child(6){left:31%!important;top:66%!important;animation-delay:2.25s!important;width:2.6vw!important;height:2.6vw!important}
+
+@keyframes starTwinkleV16{
+  0%,100%{opacity:.10;transform:scale(.54) rotate(-6deg)}
+  42%{opacity:.62;transform:scale(.92) rotate(8deg)}
+  56%{opacity:.88;transform:scale(1.02) rotate(12deg)}
+  74%{opacity:.34;transform:scale(.78) rotate(18deg)}
+}
+
+/* バイキンが消えた場所の局所キラキラも、主張を下げて“清潔感”寄りにする。 */
+.clean-decor .star{
+  width:4.6vw!important;
+  height:4.6vw!important;
+  opacity:.82!important;
+  filter:drop-shadow(0 0 6px rgba(255,240,120,.62))!important;
+  animation:cleanLocalStarV16 2.05s ease-in-out infinite!important;
+}
+.clean-decor .star.small{
+  width:3.0vw!important;
+  height:3.0vw!important;
+  opacity:.66!important;
+  animation-delay:.86s!important;
+  filter:drop-shadow(0 0 5px rgba(255,240,150,.46))!important;
+}
+.clean-decor .star::before,
+.clean-decor .star.small::before{background:rgba(255,232,112,.76)!important}
+.clean-decor .star::after{inset:31%!important;background:rgba(255,255,255,.90)!important}
+.app.climax-cleaning .clean-decor .star{width:5.0vw!important;height:5.0vw!important}
+
+@keyframes cleanLocalStarV16{
+  0%,100%{opacity:.16;transform:scale(.62) rotate(-7deg)}
+  46%{opacity:.76;transform:scale(.96) rotate(9deg)}
+  64%{opacity:.88;transform:scale(1.02) rotate(13deg)}
+  82%{opacity:.42;transform:scale(.82) rotate(20deg)}
+}
