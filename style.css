@@ -239,3 +239,70 @@ body{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 
 /* 消えた瞬間のピカッも煙幕にしない */
 .clean-flash::before{width:15vmin!important;height:15vmin!important;filter:drop-shadow(0 0 12px rgba(255,235,70,.9))!important}.clean-flash::after{width:6.5vmin!important;height:6.5vmin!important}
+
+/* v15 foam polish：泡だけ改善。画角・音声・ボタン・ステージ画像・バイキン消去タイミングは変更なし。
+   目的：ふわふわ浮遊ではなく、歯ブラシ周辺で泡立つ「磨いてる感」を出す。 */
+.bubble-party{z-index:19!important;overflow:hidden!important}
+.bubble-party i{
+  border-radius:54% 46% 58% 42% / 48% 58% 42% 52%!important;
+  background:
+    radial-gradient(ellipse at 30% 25%,rgba(255,255,255,.98) 0 12%,rgba(255,255,255,.70) 13% 23%,rgba(255,255,255,0) 24%),
+    radial-gradient(ellipse at 65% 62%,rgba(255,255,255,.82) 0 19%,rgba(255,255,255,0) 20%),
+    radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.96) 0 43%,rgba(205,242,255,.76) 44% 66%,rgba(255,255,255,0) 71%)!important;
+  border:1.5px solid rgba(210,245,255,.78)!important;
+  box-shadow:0 0 8px rgba(100,210,255,.34), inset -1px -2px 4px rgba(155,220,250,.22)!important;
+  opacity:0;
+  transform-origin:center!important;
+  animation:foamBrushV15 1.32s ease-out infinite!important;
+}
+.bubble-party i::before,
+.bubble-party i::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  background:rgba(255,255,255,.88);
+  box-shadow:0 0 5px rgba(145,220,250,.25);
+}
+.bubble-party i::before{width:42%;height:42%;left:-18%;top:35%}
+.bubble-party i::after{width:34%;height:34%;right:-14%;top:8%}
+
+/* 泡はブラシの毛先〜歯の接触部に寄せる。中央・左・右上のバイキンには被せない。 */
+.bubble-party i:nth-child(1){left:58.8%!important;top:61.8%!important;width:3.7vw!important;height:2.6vw!important;animation-delay:0s!important}
+.bubble-party i:nth-child(2){left:62.6%!important;top:56.5%!important;width:3.0vw!important;height:2.2vw!important;animation-delay:.10s!important}
+.bubble-party i:nth-child(3){left:65.8%!important;top:61.2%!important;width:4.0vw!important;height:2.8vw!important;animation-delay:.20s!important}
+.bubble-party i:nth-child(4){left:69.6%!important;top:55.2%!important;width:3.4vw!important;height:2.3vw!important;animation-delay:.30s!important}
+.bubble-party i:nth-child(5){left:72.8%!important;top:62.6%!important;width:4.2vw!important;height:3.0vw!important;animation-delay:.40s!important}
+.bubble-party i:nth-child(6){left:58.0%!important;top:69.8%!important;width:3.1vw!important;height:2.2vw!important;animation-delay:.50s!important}
+.bubble-party i:nth-child(7){left:64.8%!important;top:70.8%!important;width:3.5vw!important;height:2.5vw!important;animation-delay:.60s!important}
+.bubble-party i:nth-child(8){left:70.8%!important;top:70.2%!important;width:3.0vw!important;height:2.1vw!important;animation-delay:.70s!important}
+.bubble-party i:nth-child(9){left:76.2%!important;top:61.0%!important;width:2.8vw!important;height:2.0vw!important;animation-delay:.80s!important}
+.bubble-party i:nth-child(10){left:62.2%!important;top:66.6%!important;width:2.7vw!important;height:1.9vw!important;animation-delay:.35s!important}
+.bubble-party i:nth-child(11){left:74.0%!important;top:69.0%!important;width:2.9vw!important;height:2.0vw!important;animation-delay:.55s!important}
+.bubble-party i:nth-child(12){left:68.0%!important;top:51.6%!important;width:2.8vw!important;height:1.9vw!important;animation-delay:.75s!important}
+
+@keyframes foamBrushV15{
+  0%{opacity:0;transform:translate3d(0,10px,0) scale(.64) rotate(-7deg)}
+  18%{opacity:.94;transform:translate3d(-3px,3px,0) scale(.90) rotate(4deg)}
+  52%{opacity:.88;transform:translate3d(4px,-4px,0) scale(1.04) rotate(-3deg)}
+  100%{opacity:0;transform:translate3d(10px,-16px,0) scale(1.16) rotate(8deg)}
+}
+
+/* 消えた場所の泡も“浮遊玉”から小さな洗浄泡へ。星は既存維持。 */
+.clean-decor .bubble{
+  border-radius:54% 46% 58% 42% / 48% 58% 42% 52%!important;
+  background:
+    radial-gradient(ellipse at 30% 25%,rgba(255,255,255,.96) 0 13%,rgba(255,255,255,0) 25%),
+    radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.90) 0 42%,rgba(205,242,255,.66) 43% 66%,rgba(255,255,255,0) 72%)!important;
+  border:1px solid rgba(215,246,255,.70)!important;
+  box-shadow:0 0 7px rgba(100,210,255,.28)!important;
+  animation:cleanFoamV15 1.85s ease-out infinite!important;
+}
+@keyframes cleanFoamV15{
+  0%{opacity:0;transform:translateY(7px) scale(.72) rotate(-5deg)}
+  24%{opacity:.70;transform:translateY(1px) scale(.92) rotate(3deg)}
+  100%{opacity:0;transform:translateY(-18px) scale(1.04) rotate(8deg)}
+}
+
+/* 90秒以降も泡数は現状維持。密度を増やさず、質感だけ上げる。 */
+.app.climax-cleaning .bubble-party i{animation-duration:1.18s!important}
